@@ -6,8 +6,10 @@ ArrayList<Enemy> Enemies = new ArrayList();
 PVector player;
 boolean up, down, left, right = false;
 int scene = 1;
+int screen;
+int score;
 
-
+int COUNT = 100;
 
 void setup()
 {
@@ -30,7 +32,7 @@ void setup()
     Enemies.add(new Enemy(player));
     Enemies.add(new Enemy(player));
     Enemies.add(new Enemy(player));
-
+    screen = 1;
     //11 enemies
   }
 }
@@ -40,66 +42,70 @@ void setup()
 void draw()
 {
 
-
-
-
-
-  noStroke();
-  fill(0, 0, 0, 25);
-  rect(0, 0, width, height);
-  fill(255);
-
-  //background(0);
-  p.Update();
-
-
-
-  for (Projectile bullet : Bullets)
+  if (screen == 1)
   {
-    bullet.Update();
-  }
+    //background(0);
+    textSize(32);
+    fill (255,0,0);
+    text("Score: "+score, 10, 30);
+    fill(0);
+    ellipse(player.x, player.y, 20, 20);
 
-  for (Enemy enemy : Enemies)
-  {
-    enemy.Update(player.copy());
+    noStroke();
+    fill(0, 0, 0, 25);
+    rect(0, 0, width, height);
+    fill(255);
+
+  
+    p.Update();
+
+
 
     for (Projectile bullet : Bullets)
     {
-      enemy.ColUpdate(bullet.bulPos.copy());
-      
+      bullet.Update();
     }
-   
+
+    for (Enemy enemy : Enemies)
+    {
+      enemy.Update(player.copy());
+
+      for (Projectile bullet : Bullets)
+      {
+        enemy.ColUpdate(bullet.bulPos.copy());
+      }
+    }
+
+    if (up)
+    {
+      player.add(0, -1);
+    }
+
+    if (down)
+    {
+      player.add(0, 1);
+    }
+
+    if (right)
+    {
+      player.add(1, 0);
+    }
+
+    if (left)
+    {
+      player.add(-1, 0);
+    }
+
+
+
+
+
+
+
+    fill(255);
+    ellipse(player.x, player.y, 20, 20);
+    fill(0);
   }
-
-  if (up)
-  {
-    player.add(0, -1);
-  }
-
-  if (down)
-  {
-    player.add(0, 1);
-  }
-
-  if (right)
-  {
-    player.add(1, 0);
-  }
-
-  if (left)
-  {
-    player.add(-1, 0);
-  }
-
-
-
-
-
-
-
-  fill(255);
-  ellipse(player.x, player.y, 20, 20);
-  fill(0);
 }
 
 void mousePressed()

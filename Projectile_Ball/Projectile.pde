@@ -1,4 +1,4 @@
-class Projectile extends Entity
+ class Projectile extends Entity
 {
 
   //PVector bulPos;
